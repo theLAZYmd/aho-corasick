@@ -7,11 +7,9 @@ class LAZYac {
     };
 
     buildTrie(substrings, options) { //Build a tree out of the substrings. Only needs to be done once for a given set of substrings
-        let dict = {
-            0: {}
-        };
+        let dict = [{}]
         let allowDuplicates = typeof options.allowDuplicates !== "undefined" ? options.allowDuplicates : true;
-        let output = {};
+        let output = [[]];
         let state = 0;
         for (let word of substrings) {
             let index = 0;
