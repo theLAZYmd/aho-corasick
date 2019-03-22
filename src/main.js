@@ -1,9 +1,12 @@
+const Error = require("./errors");
+
 class LAZYac {
     
     constructor(substrings, options = {}) {
         this.substrings = substrings;
+        this.startOnly = options.startOnly || false;
         this.buildTrie(substrings, options);
-        if (options.startOnly !== false) this.buildSuffix();
+        if (!this.startOnly) this.buildSuffix();
     };
 
     buildTrie(substrings, options) { //Build a tree out of the substrings. Only needs to be done once for a given set of substrings
@@ -59,37 +62,46 @@ class LAZYac {
     search (string, _options = {}) {
         let options = Object.assign({
             "positions": false,
-            "return": "all"             //"all", "first", "last", "shortest", "longest"
+            "return": "all",             //"all", "first", "last", "shortest", "longest"
+            "startOnly": false
         }, _options);
-        if (typeof options.positions !== "boolean") throw new TypeError("Whether to return positions with found substring values must be a boolean value.");
-        if (!/^(?:all|first|last|shortest|longest)$/.test(options.return)) throw new RangeError("Substring return value must be all, first, last, shortest, or longest of them.")
-        let state = 0;
+        if (typeof options.positions !== "boolean") throw new Error('boolean');
+        if (typeof options.startOnly !== "boolean") throw new Error('boolean');
+        if (!/^(?:all|first|last|shortest|longest)$/.test(options.return)) throw new Error('value').setValues(["all", "first", "last", "shortest", "longest"]);
+        let state = 0;      //signifies the index in the dict
         let results = [];
         for (let i = 0; i < string.length; i++) {
             let char = string[i];
-            while (state > 0 && !this.dict[state][char]) {
+            while (state > 0 && !this.dict[state][char] && this.suffix) {
                 state = this.suffix.get(state);
             }
-            if (!this.dict[state][char]) continue;
+            if (!this.dict[state][char]) {
+                if (this.startOnly || options.startOnly) return;
+                continue;
+            }
             state = this.dict[state][char];
             if (this.output[state].length > 0) {
                 let found = this.output[state];
-                if (options.positions) results.push([i, found]);
+                if (options.positions && options.return === "all") results[i] = found;
                 else results.push(...found);
             }
         }
-        switch (options.return) {
-            case "all":
-                return results
-            case "first":
-                return this.substrings.find(s => results.indexOf(s) !== -1);
-            case "last":
-                return this.substrings.reverse().find(s => results.indexOf(s) !== -1);
-            case "shortest":
-                return results.reduce((acc, curr) => curr.length < acc ? curr.length : acc);
-            case "longest":
-                return results.reduce((acc, curr) => curr.length > acc ? curr.length : acc);
-        }
+        let output = (() => {
+            switch (options.return) {
+                case "all":
+                    return results
+                case "first":
+                    return this.substrings.find(s => results.indexOf(s) !== -1);
+                case "last":
+                    return this.substrings.reverse().find(s => results.indexOf(s) !== -1);
+                case "shortest":
+                    return results.reduce((acc, curr) => curr.length < acc[0] ? [curr.length, curr] : acc, [Infinity, null])[1];
+                case "longest":
+                    return results.reduce((acc, curr) => curr.length > acc[0] ? [curr.length, curr] : acc, [0, null])[1];
+            }
+        })();
+        if (!options.positions || options.return === "all") return output;
+        else return [this.substrings.indexOf(output), output];
     }
 
 }

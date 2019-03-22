@@ -1,0 +1,21 @@
+{
+    "name": "lazy-aho-corasick",
+    "description": "Building an simple Aho-Corasick library using the latest ES6 modules and allowing user-specifiable options. The fastest string-matching algoithm for a fixed number of pre-known substrings.",
+    "version": "1.0.0",
+    "main": "src/main.js",
+    "keywords": [
+        "aho-corasick",
+        "string-matching",
+        "lazy",
+        "utility"
+    ],
+    "homepage": "https://github.com/theLAZYmd/LAZY-AhoCorasick/blob/master/README.md",
+    "releases": "https://github.com/theLAZYmd/LAZY-AhoCorasick/releases",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/theLAZYmd/LAZY-AhoCorasick/.git"
+    },
+    "author": "theLAZYmd",
+    "license": "GNU",
+    "dependencies": {}
+}
