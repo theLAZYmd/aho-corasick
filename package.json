@@ -1,6 +1,6 @@
 {
     "name": "lazy-aho-corasick",
-    "description": "Building an simple Aho-Corasick library using the latest ES6 modules and allowing user-specifiable options. The fastest string-matching algoithm for a fixed number of pre-known substrings.",
+    "description": "A simple Aho-Corasick library using the latest ES6 modules and allowing user-specifiable options. The fastest string-matching algoithm for a fixed number of pre-known substrings.",
     "version": "1.0.0",
     "main": "src/main.js",
     "keywords": [
