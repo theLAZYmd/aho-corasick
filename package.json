@@ -17,5 +17,8 @@
     },
     "author": "theLAZYmd",
     "license": "GNU",
-    "dependencies": {}
+    "dependencies": {},
+    "scripts": {
+        "test": "node src/example.js"
+    }
 }

@@ -9,6 +9,10 @@ class LAZYac {
         if (!this.startOnly) this.buildSuffix();
     };
 
+    get length () {
+        return this.output.length;
+    }
+
     buildTrie(substrings, options) { //Build a tree out of the substrings. Only needs to be done once for a given set of substrings
         let dict = [{}]
         let allowDuplicates = typeof options.allowDuplicates !== "undefined" ? options.allowDuplicates : true;
