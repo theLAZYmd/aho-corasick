@@ -1,7 +1,10 @@
-class ValueError extends Error {
+export class ValueError extends Error {
 
-    constructor(message) {
-        super(...arguments);
+	public values?: string[]
+	private _message: string
+
+    constructor(message: string) {
+        super(message);
         Error.captureStackTrace(this, ValueError);
         this._message = message;
     }
@@ -11,16 +14,16 @@ class ValueError extends Error {
         return this._message + 'Input values must be: ' + this.values.slice(0, -1).join(',') + " or " + this.values[-1];
     }
 
-    setValues(values) {
+    setValues(values: string[]) {
         this.values = values;
         return this;
     }
 
 }
 
-class E extends Error {
+export default class E extends Error {
 
-    constructor(key) {
+    constructor(key: string) {
         super(key);
         switch(key) {
             case ('boolean'):
@@ -31,5 +34,3 @@ class E extends Error {
     }
 
 }
-
-module.exports = E;
