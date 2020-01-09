@@ -6,6 +6,7 @@ This build of the Aho-Corasick algorithm has three main priorities:
 - Ease of use for the user
 - Number of features built in for the user
 - Speed using the latest ES6 methods
+- Support for typescript (written in typescript, built with index.d.ts files)
 
 To use the library, simply build the trie using the `new` keyword, then use the `.search()` method to begin searching within a string. A typical implementation might look like this:
 
